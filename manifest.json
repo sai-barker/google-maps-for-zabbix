@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2.0,
+    "id": "geomaplayers",
+    "name": "Google Maps for Zabbix",
+    "namespace": "GeomapLayers",
+    "version": "1.0.0",
+    "author": "Sai Barker",
+    "url": "https://github.com/sai-barker/google-maps-for-zabbix",
+    "description": "Google Maps (road map, satellite, hybrid, terrain) for Geomap widgets through Google's Map Tiles API, set up in Administration > General > Geographical maps, plus a Layers button to switch the map on each Geomap.",
+    "actions": {
+        "geomaps.edit": {
+            "class": "GeomapsEdit",
+            "view": "geomaplayers.geomaps.edit",
+            "layout": "layout.htmlpage"
+        },
+        "geomaps.update": {
+            "class": "GeomapsUpdate"
+        },
+        "geomaplayers.list": {
+            "class": "LayerList",
+            "layout": "layout.json"
+        }
+    },
+    "assets": {
+        "css": ["geomap-layers.css"],
+        "js": ["geomap-layers.js"]
+    },
+    "config": {
+        "google_key": "",
+        "google_language": "en",
+        "google_region": "",
+        "layers_button": 1,
+        "hidden_layers": []
+    }
+}

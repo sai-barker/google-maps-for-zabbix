@@ -1,0 +1,62 @@
+/* Layers button on Geomap widgets: same look as the severity filter (Zabbix .geomap-filter). */
+div.dashboard-widget-geomap .geomap-layers .geomap-layers-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+div.dashboard-widget-geomap .geomap-layers .geomap-layers-button::before {
+	content: '';
+	width: 16px;
+	height: 16px;
+	background-color: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 3 2 8.5 12 14l10-5.5L12 3Z'/%3E%3Cpath d='m2 13 10 5.5L22 13'/%3E%3Cpath d='m2 17.5 10 5.5 10-5.5'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 3 2 8.5 12 14l10-5.5L12 3Z'/%3E%3Cpath d='m2 13 10 5.5L22 13'/%3E%3Cpath d='m2 17.5 10 5.5 10-5.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+div.dashboard-widget-geomap .geomap-layers .geomap-layers-list {
+	width: max-content;
+	overflow-y: auto;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+div.dashboard-widget-geomap .geomap-layers .geomap-layers-group {
+	margin: 6px 0 2px;
+	font-weight: bold;
+	opacity: .7;
+}
+
+div.dashboard-widget-geomap .geomap-layers .geomap-layers-group:first-child {
+	margin-top: 0;
+}
+
+/* Google's logo while a Google layer is on: 18px tall with Google's minimum clear space. */
+div.dashboard-widget-geomap .leaflet-control.geomap-layers-google-logo {
+	margin: 10px 10px 5px;
+	line-height: 0;
+	pointer-events: none;
+}
+
+div.dashboard-widget-geomap .geomap-layers-google-logo img {
+	height: 18px;
+	width: auto;
+}
+
+/* Administration > General > Geographical maps: Test key button and its result. */
+.geomaplayers-test {
+	margin-top: 6px;
+}
+
+.geomaplayers-test #google_key_result {
+	margin-left: 10px;
+}
+
+div.dashboard-widget-geomap .geomap-layers-google-text {
+	display: inline-block;
+	padding: 1px 4px;
+	font: 500 12px/16px Roboto, Arial, sans-serif;
+	color: #3c4043;
+	background: rgba(255, 255, 255, .8);
+}

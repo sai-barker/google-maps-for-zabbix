@@ -498,9 +498,22 @@
 
 	/*
 	 * Zabbix fix: "Reset to initial view" on a geomap without an "Initial view" setting cleared the saved view
-	 * but left the map where it was until the page was reloaded. Now it moves to the same view a reload shows.
+	 * but left the map where it was until the page was reloaded. Now it moves to a view that fits the hosts (or the server's view if there are none).
 	 */
 	let reset_patched = false;
+
+	// The first default view a map gets is the one the server sends, i.e. what a page reload shows.
+	const setDefaultView = L.Map.prototype.setDefaultView;
+
+	L.Map.include({
+		setDefaultView: function(latLng, zoom) {
+			if (!this._geomapFirstView) {
+				this._geomapFirstView = {latLng, zoom};
+			}
+
+			return setDefaultView.call(this, latLng, zoom);
+		}
+	});
 
 	function patchResetView() {
 		if (reset_patched || typeof CWidgetGeoMap === 'undefined' || !CWidgetGeoMap.prototype.unsetDefaultView) {
@@ -514,10 +527,20 @@
 			const result = unsetDefaultView.apply(this, args);
 
 			if (!had_initial && this._map !== null) {
-				const world = L.latLng(0, 0);
+				const map = this._map;
+				const bounds = this._markers ? this._markers.getBounds() : null;
 
-				this._map.setDefaultView(world, 1);
-				this._map.setView(world, 1);
+				if (bounds && bounds.isValid()) {
+					// Fit the hosts, but not closer than a city view if there is only one.
+					map.fitBounds(bounds, {maxZoom: 12, padding: [30, 30]});
+				}
+				else {
+					const first = map._geomapFirstView || {latLng: L.latLng(0, 0), zoom: 1};
+
+					map.setView(first.latLng, first.zoom);
+				}
+
+				map.setDefaultView(map.getCenter(), map.getZoom());
 			}
 
 			return result;
